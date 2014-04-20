@@ -222,7 +222,7 @@ namespace Maybe.Test
         }
 
         [Test]
-        public void MonadLow1()
+        public void MonadLaw1()
         {
             Func<int, Option<int>> func = i =>
             {
@@ -235,14 +235,14 @@ namespace Maybe.Test
         }
 
         [Test]
-        public void MonadLow2()
+        public void MonadLaw2()
         {
             Func<int, Option<int>> _return = i => Option.Some(i);
             Option.Some(1).Bind(_return).Is(Option.Some(1));
         }
 
         [Test]
-        public void MonadLow3()
+        public void MonadLaw3()
         {
             Func<int, Option<int>> func1 = i =>
             {
