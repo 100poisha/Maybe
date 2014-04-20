@@ -3,6 +3,7 @@ using System;
 
 namespace Maybe.Test
 {
+
     [TestFixture]
     public class OptionTest
     {
@@ -127,6 +128,12 @@ namespace Maybe.Test
         [TestCaseSource("Bind_TestCaseSource")]
         public void Bind(Option<string> input, Option<int> expected, bool isRunning)
         {
+            // F# Code:
+            // let func = function
+            //     | s when not (String.IsNullOrWhiteSpace s) -> Some s.Length
+            //     | _ -> None;;
+            //
+            // input >>= func;;
             bool funcRunning = false;
             Func<string, Option<int>> func = s =>
             {
@@ -152,6 +159,15 @@ namespace Maybe.Test
             bool callFirstMethod = false;
             bool callSecondMethod = false;
 
+            // F# Code:
+            // input >>= (fun s -> 
+            //     match (String.IsNullOrWhiteSpace s) with
+            //     | false -> Some s.Length
+            //     | true -> None)
+            // >>= (fun i ->
+            //     match (i % 2 = 0) with
+            //     | true -> Some (i / 2)
+            //     | false -> None);;
             Func<string, Option<int>> firstMethod = s =>
             {
                 callFirstMethod = true;
@@ -187,6 +203,10 @@ namespace Maybe.Test
             bool callOuterMethod = false;
             bool callInnerMethod = false;
 
+            // F# Code:
+            // value1 >>= (fun outer ->
+            //     value2 >>= (fun inner ->
+            //         Some (outer + inner)));;
             value1.Bind(outer =>
                 {
                     callOuterMethod = true;
@@ -214,6 +234,12 @@ namespace Maybe.Test
         [TestCaseSource("BindQuery_TestCaseSource")]
         public void BindQuery(Option<string> value1, Option<int> value2, Option<int> expected)
         {
+            // F# Code: 
+            // maybe {
+            //     let! s = value1
+            //     let! i = value2
+            //     return s.Length + i
+            // };;
             var result = from s in value1
                          from i in value2
                          select (s.Length) + i;
@@ -221,9 +247,17 @@ namespace Maybe.Test
             result.Is(expected);
         }
 
+        // (return x) >>= f == f x
         [Test]
         public void MonadLaw1()
         {
+            // F# Code:
+            // let func = function
+            //     | i when i % 2 = 0 -> Some (i / 2)
+            //     | _ -> None;;
+            //
+            // (Some 1 >>= func) = (func 1);;
+            // (Some 2 >>= func) = (func 2);;
             Func<int, Option<int>> func = i =>
             {
                 if (i % 2 == 0) return Option.Some(i / 2);
@@ -234,16 +268,32 @@ namespace Maybe.Test
             Option.Some(2).Bind(func).Is(func(2));
         }
 
+        // m >>= return == m
         [Test]
         public void MonadLaw2()
         {
+            // F# Code:
+            // ((Some 1) >>= returnM) = (Some 1);;
             Func<int, Option<int>> _return = i => Option.Some(i);
             Option.Some(1).Bind(_return).Is(Option.Some(1));
         }
 
+        // (m >>= f) >>= g == m >>= (\x -> f x >>= g)
         [Test]
         public void MonadLaw3()
         {
+            // F# Code:
+            // let func1 = function
+            //     | i when i % 2 = 0 -> Some (i / 2)
+            //     | _ -> None;;
+            //
+            // let func2 = function
+            //     | i when i % 3 = 0 -> Some (i / 3)
+            //     | _ -> None;;
+            //
+            // (((Some 6) >>= func1) >>= func2) = ((Some 6) >>= (fun x -> ((func1 x) >>= func2)));;
+            // (((Some 4) >>= func1) >>= func2) = ((Some 4) >>= (fun x -> ((func1 x) >>= func2)));;
+            // (((Some 3) >>= func1) >>= func2) = ((Some 3) >>= (fun x -> ((func1 x) >>= func2)));;
             Func<int, Option<int>> func1 = i =>
             {
                 if (i % 2 == 0) return Option.Some(i / 2);
