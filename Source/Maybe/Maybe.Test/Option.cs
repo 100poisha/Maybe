@@ -3,7 +3,13 @@ using System;
 
 namespace Maybe.Test
 {
-
+    // F# Code comment usage:
+    // 1.run F# Interactive.
+    // 2.type this command.
+    //   #r @"C:\directory\path\FSharpx.Core.dll";;
+    //   open FSharpx.Option;;
+    //   open System;;
+    // 3.copy and paste F# comment.
     [TestFixture]
     public class OptionTest
     {
@@ -160,14 +166,12 @@ namespace Maybe.Test
             bool callSecondMethod = false;
 
             // F# Code:
-            // input >>= (fun s -> 
-            //     match (String.IsNullOrWhiteSpace s) with
-            //     | false -> Some s.Length
-            //     | true -> None)
-            // >>= (fun i ->
-            //     match (i % 2 = 0) with
-            //     | true -> Some (i / 2)
-            //     | false -> None);;
+            // input >>= function
+            //     | s when not (String.IsNullOrWhiteSpace s) -> Some s.Length
+            //     | _ -> None
+            // >>= function
+            //     | i when (i % 2 = 0) -> Some (i / 2)
+            //     | _ -> None;;
             Func<string, Option<int>> firstMethod = s =>
             {
                 callFirstMethod = true;
