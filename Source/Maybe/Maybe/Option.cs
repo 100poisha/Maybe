@@ -61,7 +61,7 @@
         }
     }
 
-	public static class Option
+    public static class Option
     {
         public static Option<T> Some<T>(T value)
         {

@@ -3,7 +3,7 @@ using System;
 
 namespace Maybe.Test
 {
-	[TestFixture]
+    [TestFixture]
     public class OptionTest
     {
         //Option<T>
@@ -15,16 +15,16 @@ namespace Maybe.Test
             Assert.Catch<InvalidOperationException>(() => { var i = o.Value; });
         }
 
-		[Test]
-		public void Default_class()
+        [Test]
+        public void Default_class()
         {
             var o = default(Option<string>);
             o.HasValue.IsFalse();
             Assert.Catch<InvalidOperationException>(() => { var s = o.Value; });
         }
 
-		[Test]
-		public void Default_nullable()
+        [Test]
+        public void Default_nullable()
         {
             var o = default(Option<int?>);
             o.HasValue.IsFalse();
@@ -40,8 +40,8 @@ namespace Maybe.Test
             o.ToString().Is(string.Format("Some({0})", s.ToString()));
         }
 
-		[Test]
-		public void ToString_None()
+        [Test]
+        public void ToString_None()
         {
             var o = Option.None<string>();
 
@@ -120,10 +120,10 @@ namespace Maybe.Test
 
         private object[] Bind_TestCaseSource =
         {
-			new object[]{ Option.Some("foo"), Option.Some(3), true },
-			new object[]{ Option.Some(""), Option.None<int>(), true },
-			new object[]{ Option.None<string>(), Option.None<int>(), false },
-		};
+            new object[]{ Option.Some("foo"), Option.Some(3), true },
+            new object[]{ Option.Some(""), Option.None<int>(), true },
+            new object[]{ Option.None<string>(), Option.None<int>(), false },
+        };
         [TestCaseSource("Bind_TestCaseSource")]
         public void Bind(Option<string> input, Option<int> expected, bool isRunning)
         {
@@ -141,11 +141,11 @@ namespace Maybe.Test
 
         private object[] BindChain_TestCaseSource = 
         {
-			new object[]{ Option.Some("fooo"), Option.Some(2), true, true },
-			new object[]{ Option.Some("foo"), Option.None<int>(), true, true },
-			new object[]{ Option.Some(""), Option.None<int>(), true, false },
-			new object[]{ Option.None<string>(), Option.None<int>(), false, false },
-		};
+            new object[]{ Option.Some("fooo"), Option.Some(2), true, true },
+            new object[]{ Option.Some("foo"), Option.None<int>(), true, true },
+            new object[]{ Option.Some(""), Option.None<int>(), true, false },
+            new object[]{ Option.None<string>(), Option.None<int>(), false, false },
+        };
         [TestCaseSource("BindChain_TestCaseSource")]
         public void BindChain(Option<string> value, Option<int> expected, bool isFirstCalled, bool isSecondCalled)
         {
@@ -176,11 +176,11 @@ namespace Maybe.Test
 
         private object[] BindNest_TestCaseSource = 
         {
-			new object[]{ Option.Some(1), Option.Some(2), Option.Some(3), true, true },
-			new object[]{ Option.Some(1), Option.None<int>(), Option.None<int>(), true, false },
-			new object[]{ Option.None<int>(),  Option.Some(2), Option.None<int>(), false, false },
-			new object[]{ Option.None<int>(), Option.None<int>(), Option.None<int>(), false, false },
-		};
+            new object[]{ Option.Some(1), Option.Some(2), Option.Some(3), true, true },
+            new object[]{ Option.Some(1), Option.None<int>(), Option.None<int>(), true, false },
+            new object[]{ Option.None<int>(),  Option.Some(2), Option.None<int>(), false, false },
+            new object[]{ Option.None<int>(), Option.None<int>(), Option.None<int>(), false, false },
+        };
         [TestCaseSource("BindNest_TestCaseSource")]
         public void BindNest(Option<int> value1, Option<int> value2, Option<int> expected, bool isOuterCalled, bool isInnerCalled)
         {
