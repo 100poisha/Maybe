@@ -251,6 +251,30 @@ namespace Maybe.Test
             result.Is(expected);
         }
 
+        private object[] Or_OptionT_OptionT_TestCaseSource =
+        {
+            new object[] { Option.Some(1), Option.Some(2), Option.Some(1) },
+            new object[] { Option.Some(1), Option.None<int>(), Option.Some(1) },
+            new object[] { Option.None<int>(), Option.Some(2), Option.Some(2) },
+            new object[] { Option.None<int>(), Option.None<int>(), Option.None<int>() },
+        };
+        [TestCaseSource("Or_OptionT_OptionT_TestCaseSource")]
+        public void Or_OptionT_OptionT(Option<int> left, Option<int> right, Option<int> expected)
+        {
+            left.Or(right).Is(expected);
+        }
+
+        private object[] Or_OptionT_T_TestCaseSource =
+        {
+            new object[] { Option.Some(1), 2, 1 },
+            new object[] { Option.None<int>(), 2, 2 },
+        };
+        [TestCaseSource("Or_OptionT_T_TestCaseSource")]
+        public void Or_OptionT_T(Option<int> left, int right, int expected)
+        {
+            left.Or(right).Is(expected);
+        }
+
         // (return x) >>= f == f x
         [Test]
         public void MonadLaw1()
@@ -313,6 +337,104 @@ namespace Maybe.Test
             (Option.Some(6).Bind(func1)).Bind(func2).Is(Option.Some(6).Bind(i => func1(i).Bind(func2)));
             (Option.Some(4).Bind(func1)).Bind(func2).Is(Option.Some(4).Bind(i => func1(i).Bind(func2)));
             (Option.Some(3).Bind(func1)).Bind(func2).Is(Option.Some(3).Bind(i => func1(i).Bind(func2)));
+        }
+
+        // mplus mzero a = a (or mzero `mplus` a = a)
+        [Test]
+        public void MonadPlusLaw1()
+        {
+            // In FSharpX and F #, there is no mplus defined.
+            // orElse is used instead of mplus.
+
+            // F# Code:
+            // let mzero: int option = maybe.Zero();;
+            // let none: int option = None;;
+            // mzero |> orElse (Some 1) = (Some 1);;
+            // mzero |> orElse none = none;;
+
+            var mzero = Option<int>.MZero;
+            mzero.MPlus(Option.Some(1)).Is(Option.Some(1));
+            mzero.MPlus(Option.None<int>()).Is(Option.None<int>());
+        }
+
+        // mplus a mzero = a (or a `mplus` mzero = a)
+        [Test]
+        public void MonadPlusLaw2()
+        {
+            // F# Code:
+            // let mzero: int option = maybe.Zero();;
+            // let none: int option = None;;
+            // Some 1 |> orElse mzero = (Some 1);;
+            // none |> orElse mzero = none;;
+
+            var mzero = Option<int>.MZero;
+            mzero.MPlus(Option.Some(1)).Is(Option.Some(1));
+            mzero.MPlus(Option.None<int>()).Is(Option.None<int>());
+        }
+
+        // (mplus (mplus a b) c) = (mplus a (mplus b c))
+        // (or ((a `mplus` b) `mplus c) = (a `mplus` (b `mplus` c)) )
+        [Test]
+        public void MonadPlusLaw3()
+        {
+            // F# Code:
+            // let none: int option = None;;
+            // (((Some 1) |> orElse (Some 2)) |> orElse (Some 3)) =
+            //     ((Some 1) |> orElse ((Some 2) |> orElse (Some 3)));;
+            // (((none) |> orElse (Some 2)) |> orElse (Some 3)) =
+            //     ((none) |> orElse ((Some 2) |> orElse (Some 3)));;
+            // (((Some 1) |> orElse (none)) |> orElse (Some 3)) =
+            //     ((Some 1) |> orElse ((none) |> orElse (Some 3)));;
+            // (((Some 1) |> orElse (Some 2)) |> orElse (none)) =
+            //     ((Some 1) |> orElse ((Some 2) |> orElse (none)));;
+            // (((none) |> orElse (none)) |> orElse (Some 3)) =
+            //     ((none) |> orElse ((none) |> orElse (Some 3)));;
+            // (((none) |> orElse (Some 2)) |> orElse (none)) =
+            //     ((none) |> orElse ((Some 2) |> orElse (none)));;
+            // (((Some 1) |> orElse (none)) |> orElse (none)) =
+            //     ((Some 1) |> orElse ((none) |> orElse (none)));;
+            // (((none) |> orElse (none)) |> orElse (none)) =
+            //     ((none) |> orElse ((none) |> orElse (none)));;
+            (Option.Some(1).MPlus(Option.Some(2))).MPlus(Option.Some(3))
+                .Is(Option.Some(1).MPlus(Option.Some(2).MPlus(Option.Some(3))));
+            (Option.None<int>().MPlus(Option.Some(2))).MPlus(Option.Some(3))
+                .Is(Option.None<int>().MPlus(Option.Some(2).MPlus(Option.Some(3))));
+            (Option.Some(1).MPlus(Option.None<int>())).MPlus(Option.Some(3))
+                .Is(Option.Some(1).MPlus(Option.None<int>().MPlus(Option.Some(3))));
+            (Option.Some(1).MPlus(Option.Some(2))).MPlus(Option.None<int>())
+                .Is(Option.Some(1).MPlus(Option.Some(2).MPlus(Option.None<int>())));
+            (Option.None<int>().MPlus(Option.None<int>())).MPlus(Option.Some(3))
+                .Is(Option.None<int>().MPlus(Option.None<int>().MPlus(Option.Some(3))));
+            (Option.None<int>().MPlus(Option.Some(2))).MPlus(Option.None<int>())
+                .Is(Option.None<int>().MPlus(Option.Some(2).MPlus(Option.None<int>())));
+            (Option.Some(1).MPlus(Option.None<int>())).MPlus(Option.None<int>())
+                .Is(Option.Some(1).MPlus(Option.None<int>().MPlus(Option.None<int>())));
+            (Option.None<int>().MPlus(Option.None<int>())).MPlus(Option.None<int>())
+                .Is(Option.None<int>().MPlus(Option.None<int>().MPlus(Option.None<int>())));
+        }
+        
+        // mzero >>= k = mzero
+        [Test]
+        public void MonadPlusLaw4()
+        {
+            // F# Code:
+            // let mzero: int option = maybe.Zero();;
+            // mzero >>= (fun i -> Some i) = mzero;;
+
+            var mzero = Option<int>.MZero;
+            mzero.Bind(i => Option.Some(i)).Is(mzero);
+        }
+
+        // mplus a b = a (or a `mplus` b = a)
+        [Test]
+        public void MonadPlusLaw5()
+        {
+            // F# Code:
+            // (Some 1) |> orElse (Some 2) = (Some 1);;
+            // (Some 2) |> orElse (Some 1) = (Some 2);;
+
+            Option.Some(1).MPlus(Option.Some(2)).Is(Option.Some(1));
+            Option.Some(2).MPlus(Option.Some(1)).Is(Option.Some(2));
         }
     }
 }

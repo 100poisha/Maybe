@@ -59,6 +59,10 @@
         {
             return !(lhs == rhs);
         }
+
+        private static readonly Option<T> _MZero = default(Option<T>);
+
+        public static Option<T> MZero { get { return _MZero; } }
     }
 
     public static class Option
@@ -72,7 +76,7 @@
 
         public static Option<T> None<T>()
         {
-            return new Option<T>(default(T), false);
+            return Option<T>.MZero;
         }
 
         public static Option<TResult> Bind<TSounce, TResult>(this Option<TSounce> self,
@@ -88,6 +92,13 @@
             return None<TResult>();
         }
 
+        public static Option<T> MPlus<T>(this Option<T> left, Option<T> right)
+        {
+            if (left.HasValue) return left;
+
+            return right;
+        }
+
         public static Option<TResult> Select<TSounce, TResult>(this Option<TSounce> self,
             Func<TSounce, Option<TResult>> func)
         {
@@ -99,6 +110,18 @@
             Func<TSource, TOther, TResult> resultSelector)
         {
             return source.Bind(s => otherSelector(s).Bind(o => Some(resultSelector(s, o))));
+        }
+
+        public static Option<T> Or<T>(this Option<T> left, Option<T> right)
+        {
+            return left.MPlus(right);
+        }
+
+        public static T Or<T>(this Option<T> left, T right)
+        {
+            if (left.HasValue) return left.Value;
+
+            return right;
         }
     }
 }
