@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChainingAssertion.NUnit.cs" />
+    <Compile Include="Maybe\Maybe.Core.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
