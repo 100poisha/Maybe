@@ -46,6 +46,17 @@
   <ItemGroup>
     <Compile Include="ChainingAssertion.NUnit.cs" />
     <Compile Include="Maybe\Maybe.Core.cs" />
+    <Compile Include="Maybe\Maybe.ParseBoolean.cs" />
+    <Compile Include="Maybe\Maybe.ParseByte.cs" />
+    <Compile Include="Maybe\Maybe.ParseChar.cs" />
+    <Compile Include="Maybe\Maybe.ParseDateTime.cs" />
+    <Compile Include="Maybe\Maybe.ParseDecimal.cs" />
+    <Compile Include="Maybe\Maybe.ParseDouble.cs" />
+    <Compile Include="Maybe\Maybe.ParseInt16.cs" />
+    <Compile Include="Maybe\Maybe.ParseInt32.cs" />
+    <Compile Include="Maybe\Maybe.ParseInt64.cs" />
+    <Compile Include="Maybe\Maybe.ParseSingle.cs" />
+    <Compile Include="Maybe\Maybe.ParseTimeSpan.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

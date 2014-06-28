@@ -2,20 +2,18 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AE82EFB0-79CB-4603-ADEF-00910812B11A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1E4164C9-4E4C-4786-9404-0890E21AD8C8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System</RootNamespace>
-    <AssemblyName>Maybe</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile136</TargetFrameworkProfile>
+    <RootNamespace>Maybe.Parse.Generate</RootNamespace>
+    <AssemblyName>Maybe.Parse.Generate</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,25 +32,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maybe\Maybe.Core.cs" />
-    <Compile Include="Maybe\Maybe.ParseBoolean.cs" />
-    <Compile Include="Maybe\Maybe.ParseByte.cs" />
-    <Compile Include="Maybe\Maybe.ParseChar.cs" />
-    <Compile Include="Maybe\Maybe.ParseDateTime.cs" />
-    <Compile Include="Maybe\Maybe.ParseDecimal.cs" />
-    <Compile Include="Maybe\Maybe.ParseDouble.cs" />
-    <Compile Include="Maybe\Maybe.ParseInt16.cs" />
-    <Compile Include="Maybe\Maybe.ParseInt32.cs" />
-    <Compile Include="Maybe\Maybe.ParseInt64.cs" />
-    <Compile Include="Maybe\Maybe.ParseSingle.cs" />
-    <Compile Include="Maybe\Maybe.ParseTimeSpan.cs" />
-    <Compile Include="Option.cs" />
+    <Compile Include="Maybe_ParseNumber.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Maybe_ParseNumber.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Maybe_ParseNumber.Partial.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Maybe_ParseNumber.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Maybe_ParseNumber.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
