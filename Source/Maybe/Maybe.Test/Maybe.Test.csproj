@@ -47,6 +47,7 @@
     <Compile Include="ChainingAssertion.NUnit.cs" />
     <Compile Include="Maybe\Maybe.Core.cs" />
     <Compile Include="Maybe\Maybe.DictionaryExtension.cs" />
+    <Compile Include="Maybe\Maybe.EnumerableExtension.cs" />
     <Compile Include="Maybe\Maybe.ParseBoolean.cs" />
     <Compile Include="Maybe\Maybe.ParseByte.cs" />
     <Compile Include="Maybe\Maybe.ParseChar.cs" />
