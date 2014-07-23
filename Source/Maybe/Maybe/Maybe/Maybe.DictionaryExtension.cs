@@ -18,7 +18,10 @@ namespace System
             TValue value;
             if (dictionary.TryGetValue(key, out value))
             {
-                return Option.Some(value);
+                if (value != null)
+                {
+                    return Option.Some(value);
+                }
             }
 
             return Option.None<TValue>();
