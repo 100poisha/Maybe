@@ -1,6 +1,6 @@
 ﻿namespace System
 {
-    public struct Option<T>
+    public struct Option<T> : IEquatable<Option<T>>
     {
         internal Option(T value, bool hasValue)
         {
@@ -58,6 +58,11 @@
         public static bool operator !=(Option<T> lhs, Option<T> rhs)
         {
             return !(lhs == rhs);
+        }
+
+        public bool Equals(Option<T> other)
+        {
+            return base.Equals(other);
         }
 
         private static readonly Option<T> _MZero = default(Option<T>);

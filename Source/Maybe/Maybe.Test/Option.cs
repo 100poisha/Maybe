@@ -68,6 +68,9 @@ namespace Maybe.Test
             left.Equals(right).Is(equals);
             (left == right).Is(equals);
             (left != right).Is(!equals);
+            (left as IEquatable<Option<string>>)
+                .Equals(right)
+                .Is(equals);
         }
 
         //Option
