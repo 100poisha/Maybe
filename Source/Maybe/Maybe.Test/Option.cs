@@ -254,6 +254,16 @@ namespace Maybe.Test
             result.Is(expected);
         }
 
+        [Test]
+        public void BindQuery_SelecterResultIsNull()
+        {
+            var result = from s1 in Option.Some("")
+                         from s2 in Option.Some("")
+                         select (string)null;
+
+            result.Is(Option.None<string>());
+        }
+
         private object[] Or_OptionT_OptionT_TestCaseSource =
         {
             new object[] { Option.Some(1), Option.Some(2), Option.Some(1) },

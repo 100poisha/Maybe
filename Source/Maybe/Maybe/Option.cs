@@ -114,7 +114,18 @@
             Func<TSource, Option<TOther>> otherSelector,
             Func<TSource, TOther, TResult> resultSelector)
         {
-            return source.Bind(s => otherSelector(s).Bind(o => Some(resultSelector(s, o))));
+            var other = source.Bind(otherSelector);
+
+            if (source.HasValue && other.HasValue)
+            {
+                var result = resultSelector(source.Value, other.Value);
+                if (result != null)
+                {
+                    return Option.Some(result);
+                }
+            }
+
+            return Option.None<TResult>();
         }
 
         public static Option<T> Or<T>(this Option<T> left, Option<T> right)
