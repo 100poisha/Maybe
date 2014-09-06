@@ -6,6 +6,18 @@ namespace System
 {
     public static partial class Maybe
     {
+        /// <summary>
+        /// Converts the string representation of a number to its <see cref="System.Int32"/>
+        /// type value equivalent.
+        /// </summary>
+        /// <param name="s">
+        /// A string containing a number to convert.
+        /// </param>
+        /// <returns>
+        /// Some value that represents a <see cref="System.Int32"/> type value equivalent to
+        /// the number contained in <paramref name="s"/> if <paramref name="s"/> was converted
+        /// successfully; otherwise None value.
+        /// </returns>
         public static Option<Int32> ParseInt32(string s)
         {
             Int32 result;
@@ -17,6 +29,27 @@ namespace System
             return Option.None<Int32>();
         }
 
+        /// <summary>
+        /// Converts the string representation of a number in a specified style and culture-specific
+        /// format to its <see cref="System.Int32"/> type value equivalent.
+        /// </summary>
+        /// <param name="s">
+        /// A string containing a number to convert.
+        /// The string is interpreted using the style specified by style.
+        /// </param>
+        /// <param name="style">
+        /// A bitwise combination of enumeration values that indicates the permitted format of
+        /// <paramref name="s"/>.
+        /// </param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information about
+        /// <paramref name="s"/>.
+        /// </param>
+        /// <returns>
+        /// Some value that represents a <see cref="System.Int32"/> type value equivalent to
+        /// the number contained in <paramref name="s"/> if <paramref name="s"/> was converted
+        /// successfully; otherwise None value.
+        /// </returns>
         public static Option<Int32> ParseInt32(string s,
             NumberStyles style,
             IFormatProvider provider)
