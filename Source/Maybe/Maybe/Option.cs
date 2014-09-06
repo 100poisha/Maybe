@@ -33,9 +33,9 @@
             else return "None";
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object other)
         {
-            return base.Equals(obj);
+            return base.Equals(other);
         }
 
         public override int GetHashCode()
@@ -50,14 +50,14 @@
             }
         }
 
-        public static bool operator ==(Option<T> lhs, Option<T> rhs)
+        public static bool operator ==(Option<T> option1, Option<T> option2)
         {
-            return lhs.Equals(rhs);
+            return option1.Equals(option2);
         }
 
-        public static bool operator !=(Option<T> lhs, Option<T> rhs)
+        public static bool operator !=(Option<T> option1, Option<T> option2)
         {
-            return !(lhs == rhs);
+            return !(option1 == option2);
         }
 
         public bool Equals(Option<T> other)
@@ -84,30 +84,30 @@
             return Option<T>.MZero;
         }
 
-        public static Option<TResult> Bind<TSounce, TResult>(this Option<TSounce> self,
-            Func<TSounce, Option<TResult>> func)
+        public static Option<TResult> Bind<TSounce, TResult>(this Option<TSounce> source,
+            Func<TSounce, Option<TResult>> function)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (function == null) throw new ArgumentNullException("function");
 
-            if (self.HasValue)
+            if (source.HasValue)
             {
-                return func(self.Value);
+                return function(source.Value);
             }
 
             return None<TResult>();
         }
 
-        public static Option<T> MPlus<T>(this Option<T> left, Option<T> right)
+        public static Option<T> MPlus<T>(this Option<T> option1, Option<T> option2)
         {
-            if (left.HasValue) return left;
+            if (option1.HasValue) return option1;
 
-            return right;
+            return option2;
         }
 
-        public static Option<TResult> Select<TSounce, TResult>(this Option<TSounce> self,
-            Func<TSounce, Option<TResult>> func)
+        public static Option<TResult> Select<TSounce, TResult>(this Option<TSounce> source,
+            Func<TSounce, Option<TResult>> function)
         {
-            return Bind(self, func);
+            return Bind(source, function);
         }
 
         public static Option<TResult> SelectMany<TSource, TOther, TResult>(this Option<TSource> source,
@@ -128,16 +128,16 @@
             return Option.None<TResult>();
         }
 
-        public static Option<T> Or<T>(this Option<T> left, Option<T> right)
+        public static Option<T> Or<T>(this Option<T> option1, Option<T> option2)
         {
-            return left.MPlus(right);
+            return option1.MPlus(option2);
         }
 
-        public static T Or<T>(this Option<T> left, T right)
+        public static T Or<T>(this Option<T> option, T value)
         {
-            if (left.HasValue) return left.Value;
+            if (option.HasValue) return option.Value;
 
-            return right;
+            return value;
         }
     }
 }
