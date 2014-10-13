@@ -4,6 +4,26 @@ namespace System
 {
     public static partial class Maybe
     {
+        /// <summary>
+        /// Returns an <see cref="System.Option{T}"/> object that represents a Some value that
+        /// represents the element at a specified index in a sequence, or a None value if the index
+        /// is out of range.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source"/>.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="System.Collections.Generic.IEnumerable{T}"/> to return an element from.
+        /// </param>
+        /// <param name="index">
+        /// The zero-based index of the element to retrieve.
+        /// </param>
+        /// <returns>
+        /// Some value that represents the element at a <paramref name="index"/> in a
+        /// <paramref name="source"/> if a <paramref name="index"/> is inside the bounds of the
+        /// <paramref name="source"/> sequence and element at a <paramref name="index"/> in a
+        /// <paramref name="source"/> sequence is not null; otherwise None value.
+        /// </returns>
         public static Option<TSource> ElementAtOrNone<TSource>(this IEnumerable<TSource> source,
             int index)
         {
@@ -39,6 +59,22 @@ namespace System
             return Option.None<TSource>();
         }
 
+        /// <summary>
+        /// Returns an <see cref="System.Option{T}"/> object that represents a Some value that
+        /// represents the first element of a sequence, or a None value if the sequence is empty.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source"/>.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="System.Collections.Generic.IEnumerable{T}"/> to return the first element
+        /// of.
+        /// </param>
+        /// <returns>
+        /// Some value that represents the first element of a <paramref name="source"/> if
+        /// <paramref name="source"/> is not empty and first element of a <paramref name="source"/>
+        /// is not null; otherwise None value.
+        /// </returns>
         public static Option<TSource> FirstOrNone<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null) throw new ArgumentNullException("source");
@@ -71,6 +107,28 @@ namespace System
             return Option.None<TSource>();
         }
 
+        /// <summary>
+        /// Returns an <see cref="System.Option{T}"/> object that represents a Some value that
+        /// represents the first element of the sequence that satisfies a specified condition, or a
+        /// None value if no such element is found.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source"/>.
+        /// </typeparam>
+        /// <param name="source">
+        /// An <see cref="System.Collections.Generic.IEnumerable{T}"/> to return an element from.
+        /// </param>
+        /// <param name="predicate">
+        /// A function to test each element for a condition.
+        /// </param>
+        /// <returns>
+        /// Some value that represents the first element of a <paramref name="source"/> that passes
+        /// the test specified by <paramref name="predicate"/> if <paramref name="source"/> is not
+        /// empty, one or more element of a <paramref name="source"/> passes the test specified by
+        /// <paramref name="predicate"/>, and first element of a <paramref name="source"/> that
+        /// passes the test specified by <paramref name="predicate"/> is not null; otherwise None
+        /// value.
+        /// </returns>
         public static Option<TSource> FirstOrNone<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate)
         {
@@ -90,6 +148,22 @@ namespace System
             return Option.None<TSource>();
         }
 
+        /// <summary>
+        /// Returns an <see cref="System.Option{T}"/> object that represents a Some value that
+        /// represents the last element of a sequence, or a None value if the sequence is empty.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source"/>.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="System.Collections.Generic.IEnumerable{T}"/> to return the last element
+        /// of.
+        /// </param>
+        /// <returns>
+        /// Some value that represents the last element of a <paramref name="source"/> if
+        /// <paramref name="source"/> is not empty and last element of a <paramref name="source"/>
+        /// is not null; otherwise None value.
+        /// </returns>
         public static Option<TSource> LastOrNone<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null) throw new ArgumentNullException("source");
@@ -128,6 +202,28 @@ namespace System
             return Option.None<TSource>();
         }
 
+        /// <summary>
+        /// Returns an <see cref="System.Option{T}"/> object that represents a Some value that
+        /// represents the last element of the sequence that satisfies a specified condition, or a
+        /// None value if no such element is found.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source"/>.
+        /// </typeparam>
+        /// <param name="source">
+        /// An <see cref="System.Collections.Generic.IEnumerable{T}"/> to return an element from.
+        /// </param>
+        /// <param name="predicate">
+        /// A function to test each element for a condition.
+        /// </param>
+        /// <returns>
+        /// Some value that represents the last element of a <paramref name="source"/> that passes
+        /// the test specified by <paramref name="predicate"/> if <paramref name="source"/> is not
+        /// empty, one or more element of a <paramref name="source"/> passes the test specified by
+        /// <paramref name="predicate"/>, and last element of a <paramref name="source"/> that
+        /// passes the test specified by <paramref name="predicate"/> is not null; otherwise None
+        /// value.
+        /// </returns>
         public static Option<TSource> LastOrNone<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate)
         {
@@ -155,6 +251,25 @@ namespace System
             return Option.None<TSource>();
         }
 
+        /// <summary>
+        /// Returns an <see cref="System.Option{T}"/> object that represents a Some value that
+        /// represents the only element of a sequence, or a None value if the sequence is empty.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source"/>.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="System.Collections.Generic.IEnumerable{T}"/> to return the signle element
+        /// of.
+        /// </param>
+        /// <returns>
+        /// Some value that represents the single element of a <paramref name="source"/> if
+        /// <paramref name="source"/> is not empty and single element of a <paramref name="source"/>
+        /// is not null; otherwise None value.
+        /// </returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// The input sequence contains more than one element.
+        /// </exception>
         public static Option<TSource> SingleOrNone<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null) throw new ArgumentNullException("source");
@@ -201,6 +316,32 @@ namespace System
             }
         }
 
+        /// <summary>
+        /// Returns an <see cref="System.Option{T}"/> object that represents a Some value that
+        /// represents the only element of the sequence that satisfies a specified condition, or a
+        /// None value if no such element is found.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source"/>.
+        /// </typeparam>
+        /// <param name="source">
+        /// An <see cref="System.Collections.Generic.IEnumerable{T}"/> to return a single element
+        /// from.
+        /// </param>
+        /// <param name="predicate">
+        /// A function to test each element for a condition.
+        /// </param>
+        /// <returns>
+        /// Some value that represents the single element of a <paramref name="source"/> that passes
+        /// the test specified by <paramref name="predicate"/> if <paramref name="source"/> is not
+        /// empty, single element of a <paramref name="source"/> passes the test specified by
+        /// <paramref name="predicate"/>, and single element of a <paramref name="source"/> that
+        /// passes the test specified by <paramref name="predicate"/> is not null; otherwise None
+        /// value.
+        /// </returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// More than one element satisfies the condition in predicate.
+        /// </exception>
         public static Option<TSource> SingleOrNone<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate)
         {
