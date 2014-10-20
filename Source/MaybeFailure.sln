@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maybe", "Maybe\Maybe.csproj", "{AE82EFB0-79CB-4603-ADEF-00910812B11A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaybeFailure", "MaybeFailure\MaybeFailure.csproj", "{AE82EFB0-79CB-4603-ADEF-00910812B11A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maybe.Test", "Maybe.Test\Maybe.Test.csproj", "{55FCF733-B7B4-4CBC-9174-274482B37D55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaybeFailure.Test", "MaybeFailure.Test\MaybeFailure.Test.csproj", "{55FCF733-B7B4-4CBC-9174-274482B37D55}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CB7EE30C-C0D1-4D7A-B184-69F4CA93657F}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CB7EE3
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maybe.Parse.Generate", "Maybe.Parse.Generate\Maybe.Parse.Generate.csproj", "{1E4164C9-4E4C-4786-9404-0890E21AD8C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaybeFailure.Parse.Generate", "MaybeFailure.Parse.Generate\MaybeFailure.Parse.Generate.csproj", "{1E4164C9-4E4C-4786-9404-0890E21AD8C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
