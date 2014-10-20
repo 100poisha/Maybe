@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MaybeFailure</id>
+    <title>MaybeFailure</title>
+    <version>1.0.1</version>
+    <authors>100poisha</authors>
+    <owners>100poisha</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/100poisha/MaybeFailure</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Maybe Monad library for exterminating NullRefericeException.</description>
+    <language>en-us</language>
+    <tags>maybe monad option</tags>
+  </metadata>
+  <files>
+    <file src="..\MaybeFailure\bin\Release\MaybeFailure.dll" target="lib\portable-net4+sl5+netcore45+wpa81+wp8" />
+    <file src="..\MaybeFailure\bin\Release\MaybeFailure.xml" target="lib\portable-net4+sl5+netcore45+wpa81+wp8" />
+  </files>
+</package>
